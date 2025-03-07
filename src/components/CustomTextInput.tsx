@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 4,
     marginBottom: 2,
+    width: "100%",
   },
   errorInput: {
     borderColor: "crimson",
