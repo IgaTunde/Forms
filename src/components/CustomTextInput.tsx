@@ -7,18 +7,25 @@ import {
   ViewStyle,
 } from "react-native";
 import React, { ComponentProps } from "react";
+import { useController } from "react-hook-form";
 
 type CustomTextInput = {
   label?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  name: string;
 } & ComponentProps<typeof TextInput>;
 
 export default function CustomTextInput({
   label,
   containerStyle,
+  name,
   ...textInputProps
 }: CustomTextInput) {
-  const error = undefined;
+  const {
+    field: { value, onChange, onBlur },
+    fieldState: { error },
+  } = useController({ name });
+
   return (
     <View style={containerStyle}>
       {label && (
@@ -26,6 +33,9 @@ export default function CustomTextInput({
       )}
       <TextInput
         {...textInputProps}
+        value={value}
+        onChangeText={onChange}
+        onBlur={onBlur}
         style={[
           styles.input,
           textInputProps.style,
@@ -33,7 +43,7 @@ export default function CustomTextInput({
         ]}
       />
       <Text style={{ color: "crimson", height: 17 }} numberOfLines={1}>
-        {/* {error?.message} */}
+        {error?.message}
       </Text>
     </View>
   );
