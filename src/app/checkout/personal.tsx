@@ -38,8 +38,6 @@ export default function PersonalDetailsForm() {
     resolver: zodResolver(PersonalInfoSchema),
   });
 
-  console.log(form.formState.errors);
-
   const onNext: SubmitHandler<PersonalInfro> = (data) => {
     console.log(data);
 
