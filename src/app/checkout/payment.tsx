@@ -7,16 +7,13 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import CustomTextInput from "../../components/CustomTextInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+
 import Checkbox from "expo-checkbox";
-
-const PaymentInfoSchema = z.object({
-  cardNumber: z.string().min(1),
-  expireDate: z.string().regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/),
-  cvv: z.coerce.number().min(100).max(999),
-});
-
-type PaymentInfo = z.infer<typeof PaymentInfoSchema>;
+import {
+  PaymentInfoSchema,
+  PaymentInfo,
+  useCheckoutForm,
+} from "../../context/CheckoutFormProvider";
 
 export default function PaymentDetailsForm() {
   const [isChecked, setChecked] = useState(false);
@@ -24,8 +21,10 @@ export default function PaymentDetailsForm() {
     resolver: zodResolver(PaymentInfoSchema),
   });
 
+  const { setPaymentInfo } = useCheckoutForm();
+
   const onNext: SubmitHandler<PaymentInfo> = (data) => {
-    console.log(data);
+    setPaymentInfo(data);
 
     router.push("/checkout/confirm");
   };

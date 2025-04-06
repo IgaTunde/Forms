@@ -3,22 +3,11 @@ import React from "react";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
-
-const personalInfo = {
-  fullName: "Iga Tunde",
-  address: "Nathan",
-  city: "Lagos",
-  Phone: "08189353076",
-  country: "Nigeria",
-};
-
-const paymentInfo = {
-  cardNumber: "123456567889",
-  expireDate: "05/04",
-  cvv: "123",
-};
+import { useCheckoutForm } from "../../context/CheckoutFormProvider";
 
 export default function ConfirmForm() {
+  const { personalInfo, paymentInfo } = useCheckoutForm();
+
   const onNext = () => {
     router.dismissAll();
     router.back();
